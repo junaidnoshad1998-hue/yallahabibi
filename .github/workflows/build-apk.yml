@@ -1,0 +1,51 @@
+name: Build Yalla Habibi APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Accept Android SDK licenses
+        run: |
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses || true
+
+      - name: Install Android SDK packages
+        run: |
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" \
+            "platform-tools" \
+            "platforms;android-35" \
+            "build-tools;35.0.0"
+
+      - name: Extract Android project
+        run: |
+          mkdir -p extracted_project
+          unzip -q Yalla_Habibi_Android_Project.zip -d extracted_project
+          echo "Project files:"
+          ls -la extracted_project/yalla_habibi_android
+
+      - name: Build APK
+        working-directory: extracted_project/yalla_habibi_android
+        run: |
+          gradle assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: yalla-habibi-apk
+          path: extracted_project/yalla_habibi_android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
