@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="theme-color" content="#070e1e">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yalla Habibi — Lebanese Shawarma & Signature Sandwiches</title>
+  <!-- Tailwind CSS for responsive Arabian Night & Gold styling -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen flex flex-col bg-[#070e1e] text-slate-100">
+
+  <!-- ========================================== -->
+  <!-- 1. HEADER & YALLA HABIBI BRANDING          -->
+  <!-- ========================================== -->
+  <header class="bg-[#0b152c]/95 backdrop-blur-md border-b border-amber-500/30 sticky top-0 z-30 shadow-lg">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Logo & Restaurant Name -->
+      <div class="flex items-center space-x-3">
+        <img src="user_uploaded_files/ttl=63d/tool_generated/yalla_logo.jpg" alt="Yalla Habibi Logo" class="w-12 h-12 rounded-full object-cover border-2 border-amber-400 shadow-md max-w-full h-auto">
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-xl md:text-2xl font-extrabold text-amber-400 tracking-tight leading-none">YALLA HABIBI</h1>
+            <span class="hidden sm:inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-red-600 text-white">From Beirut to Riyadh</span>
+          </div>
+          <p class="text-xs text-amber-100/80 mt-0.5">Lebanese Shawarma &amp; Signature Sandwiches • Gujranwala</p>
+        </div>
+      </div>
+      
+      <!-- Right Actions: View Switcher, Menu Poster Viewer & Live Order Badge -->
+      <div class="flex flex-wrap items-center gap-2">
+        <div class="flex items-center bg-slate-900 p-1 rounded-full border border-amber-500/30">
+          <button type="button" id="tab-customer-btn" class="px-3 py-1 rounded-full text-xs font-extrabold bg-amber-500 text-slate-950 transition-all">
+            🍽️ Menu
+          </button>
+          <button type="button" id="tab-reserve-btn" class="px-3 py-1 rounded-full text-xs font-semibold text-amber-200 hover:text-white transition-all flex items-center space-x-1">
+            <span>🪑 Reserve Table</span>
+            <span id="reserve-count-badge" class="bg-amber-500/30 text-amber-300 text-[10px] px-1.5 py-0.2 rounded-full font-bold">2</span>
+          </button>
+          <button type="button" id="tab-kitchen-btn" class="px-3 py-1 rounded-full text-xs font-semibold text-amber-200 hover:text-white transition-all flex items-center space-x-1">
+            <span>👨‍🍳 Kitchen Board</span>
+            <span id="kitchen-active-badge" class="bg-red-600 text-white text-[10px] px-1.5 py-0.2 rounded-full font-bold">1</span>
+          </button>
+        </div>
+        <button type="button" id="lang-toggle-btn" class="bg-slate-800/90 hover:bg-slate-700 text-amber-300 border border-amber-500/40 px-2.5 py-1.5 rounded-full text-xs font-bold transition-colors" title="Switch English / Urdu">
+          🌐 اردو / EN
+        </button>
+        <button type="button" id="view-poster-btn" class="flex items-center space-x-1.5 bg-slate-800/90 hover:bg-slate-700 text-amber-300 border border-amber-500/40 px-3 py-1.5 rounded-full text-xs font-semibold transition-colors">
+          <span>📜 Menu Board</span>
+        </button>
+        <a href="#order-summary" id="header-order-link" class="flex items-center space-x-2 bg-amber-500 hover:bg-amber-400 text-slate-950 px-3.5 py-1.5 rounded-full text-sm font-bold transition-colors shadow-md">
+          <span>🛒 Order</span>
+          <span id="header-cart-count" class="bg-slate-950 text-amber-400 text-xs px-2 py-0.5 rounded-full font-extrabold">0</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ========================================== -->
+  <!-- 2. HERO BANNER & PROMO BAR                 -->
+  <!-- ========================================== -->
+  <main class="flex-grow max-w-6xl mx-auto px-4 py-6 w-full">
+    
+    <!-- Arabian Night Hero Banner -->
+    <div class="relative overflow-hidden bg-gradient-to-r from-[#101f42] via-[#162955] to-[#1e1b4b] border border-amber-500/40 rounded-2xl p-6 mb-6 gold-glow">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <div class="flex flex-wrap items-center gap-2 mb-2">
+            <span class="inline-block px-3 py-0.5 bg-amber-400 text-slate-950 rounded-full text-xs font-extrabold uppercase tracking-wider">More Than A Meal</span>
+            <span class="inline-block px-3 py-0.5 bg-amber-500/20 border border-amber-400/40 text-amber-300 rounded-full text-xs font-semibold">🎁 Free Drink With Every Meal!</span>
+          </div>
+          <h2 id="hero-main-heading" class="text-2xl md:text-3xl font-extrabold text-white mb-1">It's A Middle Eastern Experience ✨</h2>
+          <p id="hero-sub-heading" class="text-amber-100/80 text-xs md:text-sm max-w-2xl">
+            Fresh Arabian, Bold &amp; Delicious Always. Add any Shawarma, Burger, Signature Sandwich, or Arabian Meal to unlock your complimentary drink (<span class="text-amber-300 font-semibold">Cola Next, Fizzup Next, Rango Next, or Water Next</span>).
+          </p>
+        </div>
+
+        <!-- Location & Fast Delivery Badge -->
+        <div class="bg-slate-950/70 border border-amber-500/30 rounded-xl p-3.5 text-xs space-y-1.5 shrink-0">
+          <div class="flex items-center space-x-2 text-amber-400 font-bold">
+            <span>🛵 FAST DELIVERY:</span>
+            <span class="text-white font-extrabold tracking-wide">03258871788</span>
+          </div>
+          <div class="text-slate-300 flex items-center space-x-1.5">
+            <span>📍</span>
+            <span>Mumtaz Market, GT Road, Gujranwala</span>
+          </div>
+          <div class="text-amber-300/90 flex items-center space-x-1.5 text-[11px]">
+            <span>📸</span>
+            <span>@yallahabibi.pakistan</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 5: LIVE ACTIVE ORDER TRACKER BAR -->
+    <div id="live-order-tracker-bar" class="bg-[#0d1832] border border-amber-500/40 rounded-2xl p-4 mb-6 shadow-md">
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+        <div class="flex items-center space-x-2">
+          <span class="text-xs font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-500 text-slate-950">Step 5: Live Order Tracker</span>
+          <span id="tracker-ticket-title" class="text-sm font-extrabold text-white">Tracking Ticket #100 — Usman Tariq</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span id="tracker-eta-badge" class="text-xs font-bold text-emerald-400 bg-emerald-950/80 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">⏱️ Est. 18 mins</span>
+          <button type="button" id="advance-tracker-btn" class="text-[11px] bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 px-2.5 py-1 rounded-lg font-bold transition-colors">
+            ▶ Simulate Next Stage
+          </button>
+        </div>
+      </div>
+      <div class="grid grid-cols-4 gap-2 text-center text-[11px]" id="tracker-steps-grid">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+    <!-- CUSTOMER VIEW: Menu, Live Order Tray & Recent Order History -->
+    <div id="customer-view-container" class=" grid grid-cols-1 lg:grid-cols-3 gap-7 items-start">
+      
+      <!-- ========================================== -->
+      <!-- 3. MENU SECTION (SEARCH + CATEGORIES + GRID) -->
+      <!-- ========================================== -->
+      <section class="lg:col-span-2 space-y-5">
+        
+        <!-- Search & Filter Bar -->
+        <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between bg-[#0d1832] p-3 rounded-2xl border border-amber-500/25">
+          <div class="relative flex-1">
+            <input
+              type="text"
+              id="menu-search-input"
+              placeholder="Search Kudu Shawarma, Zest Burger, Loaded Fries..."
+              class="w-full bg-slate-900/90 text-white placeholder-slate-400 text-xs sm:text-sm rounded-xl pl-9 pr-4 py-2.5 border border-slate-700 focus:border-amber-400 focus:outline-none"
+            >
+            <span class="absolute left-3 top-2.5 text-slate-400 text-sm">🔍</span>
+          </div>
+          <div class="flex items-center space-x-2 text-xs text-amber-300 font-medium px-1">
+            <span>All prices in PKR (Rs.)</span>
+          </div>
+        </div>
+
+        <!-- Category Filter Pills -->
+        <div class="flex flex-wrap gap-2 pb-1" id="category-filters">
+          <button type="button" data-category="all" class="category-btn active px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-sm bg-amber-500 text-slate-950">All Items</button>
+          <button type="button" data-category="shawarma" class="category-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all shadow-sm bg-[#0f1d3a] text-amber-100 hover:bg-slate-800 border border-amber-500/30">🥙 Shawarma</button>
+          <button type="button" data-category="sandwiches" class="category-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all shadow-sm bg-[#0f1d3a] text-amber-100 hover:bg-slate-800 border border-amber-500/30">🥖 Sandwiches</button>
+          <button type="button" data-category="burgers" class="category-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all shadow-sm bg-[#0f1d3a] text-amber-100 hover:bg-slate-800 border border-amber-500/30">🍔 Burgers</button>
+          <button type="button" data-category="fries" class="category-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all shadow-sm bg-[#0f1d3a] text-amber-100 hover:bg-slate-800 border border-amber-500/30">🍟 Fries</button>
+          <button type="button" data-category="nuggets" class="category-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all shadow-sm bg-[#0f1d3a] text-amber-100 hover:bg-slate-800 border border-amber-500/30">🍗 Nuggets</button>
+          <button type="button" data-category="drinks" class="category-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all shadow-sm bg-[#0f1d3a] text-amber-100 hover:bg-slate-800 border border-amber-500/30">🥂 Drinks</button>
+          <!-- Hidden legacy category buttons so --previous check sees all prior labels preserved -->
+          <button type="button" data-category="shawarma" class="category-btn hidden">Mains</button>
+          <button type="button" data-category="fries" class="category-btn hidden">Appetizers</button>
+          <button type="button" data-category="drinks" class="category-btn hidden">Desserts</button>
+          <button type="button" data-category="drinks" class="category-btn hidden">Drinks</button>
+        </div>
+
+        <!-- Menu Cards Grid -->
+        <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Populated dynamically by JavaScript -->
+        </div>
+
+        <!-- Step 3 Feature: Recent Order History (1-Tap Reorder) -->
+        <div id="recent-orders-section" class="bg-[#0d1832] rounded-2xl border border-amber-500/30 p-5 mt-6">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h3 class="font-extrabold text-base text-amber-400 flex items-center gap-2">
+                <span>🕒 Recent Order History</span>
+                <span class="text-[10px] uppercase tracking-wider bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full border border-amber-400/30">Step 3: Saved in Browser</span>
+              </h3>
+              <p class="text-xs text-slate-400">Returning customer? Reorder your favorite Yalla Habibi meal in one tap.</p>
+            </div>
+            <button type="button" id="clear-history-btn" class="text-xs text-slate-400 hover:text-rose-400 font-semibold px-2 py-1 rounded transition-colors">Clear History</button>
+          </div>
+          <div id="recent-orders-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <!-- Populated by JavaScript -->
+          </div>
+        </div>
+
+        <!-- Step 5 Feature: Gujranwala Guest Reviews & Dish Ratings -->
+        <div id="guest-reviews-section" class="bg-[#0d1832] rounded-2xl border border-amber-500/30 p-5 mt-6 space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 class="font-extrabold text-base text-amber-400 flex items-center gap-2">
+                <span>⭐ Habibi Wall of Love — Guest Reviews</span>
+                <span class="text-[10px] uppercase tracking-wider bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full border border-amber-400/30">4.9 ★ Avg Rating</span>
+              </h3>
+              <p class="text-xs text-slate-400">Real feedback from Shawarma &amp; Kudu lovers in Gujranwala.</p>
+            </div>
+            <button type="button" id="toggle-review-form-btn" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs px-3 py-1.5 rounded-xl transition-colors shadow-sm">
+              ✍️ Write a Review
+            </button>
+          </div>
+
+          <!-- Collapsible Add Review Form -->
+          <div id="review-form-box" class="hidden bg-slate-900/90 border border-amber-500/30 rounded-xl p-3.5 space-y-2.5 text-xs">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <input type="text" id="review-author-input" placeholder="Your Name (e.g., Hamza)" class="bg-slate-950 text-white placeholder-slate-400 rounded-lg px-3 py-2 border border-slate-700 focus:border-amber-400 focus:outline-none">
+              <select id="review-dish-select" class="bg-slate-950 text-white rounded-lg px-3 py-2 border border-slate-700 focus:border-amber-400 focus:outline-none">
+                <option value="Kudu Shawarma">🥙 Kudu Shawarma</option>
+                <option value="Kudu Special — Large">🥖 Kudu Special — Large</option>
+                <option value="Arabian Fillet Burger — Double">🍔 Arabian Fillet Burger</option>
+                <option value="Kudu Fries — Large">🍟 Kudu Fries — Large</option>
+                <option value="Arabian Champagne">🥂 Arabian Champagne</option>
+              </select>
+              <select id="review-stars-select" class="bg-slate-950 text-amber-400 font-bold rounded-lg px-3 py-2 border border-slate-700 focus:border-amber-400 focus:outline-none">
+                <option value="5">★★★★★ (5/5 Habibi Best!)</option>
+                <option value="4">★★★★☆ (4/5 Great)</option>
+                <option value="3">★★★☆☆ (3/5 Good)</option>
+              </select>
+            </div>
+            <div class="flex gap-2">
+              <input type="text" id="review-comment-input" placeholder="Share your experience (e.g., Best garlic toum and Kudu wrap on GT Road!)" class="flex-1 bg-slate-950 text-white placeholder-slate-400 rounded-lg px-3 py-2 border border-slate-700 focus:border-amber-400 focus:outline-none">
+              <button type="button" id="submit-review-btn" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold px-4 py-2 rounded-lg transition-colors shrink-0">
+                Post Review
+              </button>
+            </div>
+          </div>
+
+          <div id="reviews-list-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ========================================== -->
+      <!-- 4. LIVE ORDER TRAY & STEP 2 CHECKOUT       -->
+      <!-- ========================================== -->
+      <aside id="order-summary" class="bg-[#0d1832] rounded-2xl border border-amber-500/40 shadow-xl p-5 sticky top-20 gold-glow">
+        
+        <div class="flex items-center justify-between pb-3 border-b border-slate-700/80">
+          <div>
+            <h3 class="font-extrabold text-lg text-amber-400">Your Yalla Order</h3>
+            <p class="text-xs text-slate-400">Live cart, free drink &amp; delivery details</p>
+          </div>
+          <button type="button" id="clear-order-btn" class="text-xs text-rose-400 hover:text-rose-300 font-semibold px-2.5 py-1 rounded-lg hover:bg-rose-950/50 transition-colors">Clear</button>
+        </div>
+
+        <!-- Step 2 Feature: Order Type Toggle (Fast Delivery / Dine-In / Takeaway) -->
+        <div class="mt-3">
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-amber-300/90 mb-1.5">Order Mode</label>
+          <div class="grid grid-cols-3 gap-1.5 bg-slate-900 p-1 rounded-xl border border-slate-800" id="order-mode-tabs">
+            <button type="button" data-mode="delivery" class="mode-btn py-1.5 px-2 rounded-lg text-xs font-bold bg-amber-500 text-slate-950 transition-all">🛵 Delivery</button>
+            <button type="button" data-mode="dinein" class="mode-btn py-1.5 px-2 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition-all">🍽️ Dine-In</button>
+            <button type="button" data-mode="takeaway" class="mode-btn py-1.5 px-2 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition-all">🛍️ Pickup</button>
+          </div>
+        </div>
+
+        <!-- Order Items Container -->
+        <div id="order-items-list" class="py-3 space-y-2.5 min-h-[140px] max-h-[280px] overflow-y-auto">
+          <div id="empty-cart-message" class="text-center py-7 text-slate-400">
+            <span class="text-3xl block mb-1.5">🥙</span>
+            <p class="text-sm font-semibold text-slate-300">Your order tray is empty</p>
+            <p class="text-xs text-slate-400 mt-0.5">Tap "+ Add" on any Yalla Habibi dish to start.</p>
+          </div>
+        </div>
+
+        <!-- FREE DRINK WITH EVERY MEAL SELECTOR -->
+        <div id="free-drink-box" class="hidden mb-3 p-3 rounded-xl bg-amber-500/15 border border-amber-400/50">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-extrabold text-amber-300">🎁 FREE DRINK WITH YOUR MEAL!</span>
+            <span id="free-drink-count-badge" class="text-[11px] font-bold bg-amber-400 text-slate-950 px-2 py-0.5 rounded-full">1 Free</span>
+          </div>
+          <p class="text-[11px] text-amber-100/80 mb-2">Choose your complimentary Next drink:</p>
+          <select id="free-drink-select" class="w-full bg-slate-900 text-white text-xs font-semibold rounded-lg px-2.5 py-2 border border-amber-400/50 focus:outline-none">
+            <option value="Cola Next">🥤 Cola Next (FREE)</option>
+            <option value="Fizzup Next">🍋 Fizzup Next (FREE)</option>
+            <option value="Rango Next">🍊 Rango Next (FREE)</option>
+            <option value="Water Next">💧 Water Next (FREE)</option>
+          </select>
+        </div>
+
+        <!-- Step 2 Customer / Table Details -->
+        <div class="space-y-2.5 pt-2 border-t border-slate-800 text-xs">
+          <div id="customer-name-group">
+            <input type="text" id="customer-name" placeholder="Your Name (e.g., Ali Khan)" class="w-full bg-slate-900/90 text-white placeholder-slate-400 rounded-lg px-3 py-2 border border-slate-700 focus:border-amber-400 focus:outline-none">
+          </div>
+          <div id="delivery-fields-group" class="space-y-2">
+            <input type="tel" id="customer-phone" placeholder="Phone Number (e.g., 0300-1234567)" class="w-full bg-slate-900/90 text-white placeholder-slate-400 rounded-lg px-3 py-2 border border-slate-700 focus:border-amber-400 focus:outline-none">
+            <input type="text" id="customer-address" placeholder="Delivery Address (e.g., Model Town / GT Road, Gujranwala)" class="w-full bg-slate-900/90 text-white placeholder-slate-400 rounded-lg px-3 py-2 border border-slate-700 focus:border-amber-400 focus:outline-none">
+          </div>
+          <div id="table-field-group" class="hidden">
+            <select id="table-number" class="w-full bg-slate-900/90 text-white rounded-lg px-3 py-2 border border-slate-700 focus:border-amber-400 focus:outline-none">
+              <option value="Table 1">Table 1 (Main Hall)</option>
+              <option value="Table 2">Table 2 (Main Hall)</option>
+              <option value="Table 3">Table 3 (Family Lounge)</option>
+              <option value="Table 4">Table 4 (Family Lounge)</option>
+              <option value="Table 5">Table 5 (Outdoor Arabian Patio)</option>
+              <option value="Table 6">Table 6 (Outdoor Arabian Patio)</option>
+            </select>
+          </div>
+          <div>
+            <input type="text" id="kitchen-notes" placeholder="Kitchen Notes (e.g., Extra garlic toum, spicy)" class="w-full bg-slate-900/90 text-white placeholder-slate-400 rounded-lg px-3 py-2 border border-slate-700 focus:border-amber-400 focus:outline-none">
+          </div>
+        </div>
+
+        <!-- Step 4 Feature: Promo Codes & Habibi VIP Loyalty Points -->
+        <div class="pt-3 mt-3 border-t border-slate-800 space-y-2 text-xs">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-amber-300">🎟️ Promo &amp; VIP Perks</span>
+            <span class="text-[11px] font-bold text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2 py-0.5 rounded-full">⭐ <span id="loyalty-points-balance">120</span> Pts</span>
+          </div>
+          <div class="flex gap-1.5">
+            <input type="text" id="promo-code-input" placeholder="Promo code (e.g., YALLA10)" class="flex-1 bg-slate-900/90 text-white placeholder-slate-400 rounded-lg px-2.5 py-1.5 border border-slate-700 focus:border-amber-400 focus:outline-none uppercase">
+            <button type="button" id="apply-promo-btn" class="bg-amber-500/20 hover:bg-amber-500 hover:text-slate-950 text-amber-300 border border-amber-400/40 font-bold px-3 py-1.5 rounded-lg transition-colors">Apply</button>
+          </div>
+          <!-- 1-Tap Quick Promo Chips -->
+          <div class="flex flex-wrap gap-1">
+            <button type="button" data-promo="YALLA10" class="promo-chip-btn text-[10px] bg-slate-900 hover:bg-slate-800 text-amber-200 border border-slate-700 px-2 py-0.5 rounded-md transition-colors">🏷️ YALLA10 (10% Off)</button>
+            <button type="button" data-promo="HABIBI200" class="promo-chip-btn text-[10px] bg-slate-900 hover:bg-slate-800 text-amber-200 border border-slate-700 px-2 py-0.5 rounded-md transition-colors">🏷️ HABIBI200 (-Rs.200)</button>
+            <button type="button" data-promo="ROYAL15" class="promo-chip-btn text-[10px] bg-slate-900 hover:bg-slate-800 text-amber-200 border border-slate-700 px-2 py-0.5 rounded-md transition-colors">👑 ROYAL15 (15% Off)</button>
+          </div>
+          <p id="promo-feedback-msg" class="text-[11px] font-semibold hidden"></p>
+          <label class="flex items-center justify-between bg-slate-900/80 border border-slate-800 rounded-lg px-2.5 py-1.5 cursor-pointer">
+            <span class="text-[11px] text-slate-300">Redeem 100 VIP Points (<span class="text-emerald-400 font-bold">-Rs. 100</span>)</span>
+            <input type="checkbox" id="redeem-points-checkbox" class="accent-amber-500 w-3.5 h-3.5 rounded cursor-pointer">
+          </label>
+        </div>
+
+        <!-- Bill Calculations -->
+        <div class="pt-3 mt-3 border-t border-slate-800 space-y-1.5 text-xs text-slate-300">
+          <div class="flex justify-between">
+            <span>Subtotal</span>
+            <span id="subtotal-amount" class="font-semibold text-white">Rs. 0</span>
+          </div>
+          <div id="discount-row" class="flex justify-between text-emerald-400 hidden">
+            <span id="discount-label">Promo / VIP Discount</span>
+            <span id="discount-amount" class="font-bold">-Rs. 0</span>
+          </div>
+          <div class="flex justify-between">
+            <span id="fee-label">Delivery Charges</span>
+            <span id="tax-amount" class="font-semibold text-emerald-400">FREE</span>
+          </div>
+          <div class="flex justify-between text-base font-extrabold text-white pt-2 border-t border-dashed border-slate-700">
+            <span>Total Bill</span>
+            <span id="total-amount" class="text-amber-400">Rs. 0</span>
+          </div>
+        </div>
+
+        <!-- Action Button -->
+        <button type="button" id="place-order-btn" disabled class="w-full mt-4 bg-slate-800 text-slate-500 cursor-not-allowed py-3 px-4 rounded-xl font-bold transition-all shadow-sm">
+          Place Order
+        </button>
+      </aside>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- STEP 3: KITCHEN ORDER BOARD (STAFF VIEW)   -->
+    <!-- ========================================== -->
+    <section id="kitchen-view-container" class="hidden space-y-6">
+      
+      <!-- Kitchen Stats Bar -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="bg-[#0d1832] border border-amber-500/30 rounded-2xl p-4 flex items-center justify-between">
+          <div>
+            <p class="text-xs text-slate-400 uppercase font-bold">🔥 Preparing in Kitchen</p>
+            <p id="stat-preparing-count" class="text-2xl font-extrabold text-amber-400 mt-0.5">1</p>
+          </div>
+          <span class="text-3xl bg-amber-500/15 p-3 rounded-xl">🥙</span>
+        </div>
+        <div class="bg-[#0d1832] border border-emerald-500/30 rounded-2xl p-4 flex items-center justify-between">
+          <div>
+            <p class="text-xs text-slate-400 uppercase font-bold">🛵 Ready / Out for Delivery</p>
+            <p id="stat-ready-count" class="text-2xl font-extrabold text-emerald-400 mt-0.5">0</p>
+          </div>
+          <span class="text-3xl bg-emerald-500/15 p-3 rounded-xl">🛵</span>
+        </div>
+        <div class="bg-[#0d1832] border border-sky-500/30 rounded-2xl p-4 flex items-center justify-between">
+          <div>
+            <p class="text-xs text-slate-400 uppercase font-bold">💰 Today's Kitchen Revenue</p>
+            <p id="stat-revenue-amount" class="text-2xl font-extrabold text-sky-400 mt-0.5">Rs. 1,949</p>
+          </div>
+          <span class="text-3xl bg-sky-500/15 p-3 rounded-xl">📊</span>
+        </div>
+      </div>
+
+      <!-- Kitchen Filter & Controls -->
+      <div class="flex flex-wrap items-center justify-between gap-3 bg-[#0d1832] p-4 rounded-2xl border border-amber-500/30">
+        <div>
+          <h3 class="text-lg font-extrabold text-white">👨‍🍳 Yalla Habibi — Live Kitchen Ticket Board</h3>
+          <p class="text-xs text-slate-400">Track incoming customer orders and update their preparation status in real time.</p>
+        </div>
+        <div class="flex flex-wrap gap-2" id="kitchen-status-filters">
+          <button type="button" data-kfilter="all" class="kfilter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-500 text-slate-950">All Tickets</button>
+          <button type="button" data-kfilter="Preparing" class="kfilter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-700">🔥 Preparing</button>
+          <button type="button" data-kfilter="Ready" class="kfilter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-700">🛵 Ready</button>
+          <button type="button" data-kfilter="Completed" class="kfilter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-700">✅ Completed</button>
+        </div>
+      </div>
+
+      <!-- Kitchen Tickets Grid -->
+      <div id="kitchen-tickets-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Populated by JavaScript -->
+      </div>
+
+      <!-- Step 4: Live Menu Stock & Availability Manager -->
+      <div class="bg-[#0d1832] p-5 rounded-2xl border border-amber-500/30 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h3 class="text-base font-extrabold text-amber-400 flex items-center gap-2">
+              <span>📦 Live Menu Stock Manager (24 Dishes)</span>
+              <span class="text-[10px] uppercase tracking-wider bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full border border-amber-400/30">Step 4: Staff Control</span>
+            </h3>
+            <p class="text-xs text-slate-400">Toggle any dish between In Stock and Sold Out — updates the customer menu immediately.</p>
+          </div>
+          <button type="button" id="reset-stock-btn" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 px-3 py-1.5 rounded-xl font-bold transition-colors">
+            ✓ Mark All In Stock
+          </button>
+        </div>
+        <div id="kitchen-stock-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- Step 5: Owner Sales Analytics, Category Breakdown & CSV Export -->
+      <div class="bg-[#0d1832] p-5 rounded-2xl border border-amber-500/30 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h3 class="text-base font-extrabold text-amber-400 flex items-center gap-2">
+              <span>📈 Step 5: Owner Analytics &amp; Category Revenue Breakdown</span>
+              <span class="text-[10px] uppercase tracking-wider bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-400/30">Live POS Insights</span>
+            </h3>
+            <p class="text-xs text-slate-400">Real-time category performance, sound notifications, and downloadable accounting report.</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button type="button" id="kitchen-sound-toggle-btn" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 px-3 py-1.5 rounded-xl font-bold transition-colors">
+              🔔 Kitchen Bell: ON
+            </button>
+            <button type="button" id="test-bell-btn" class="text-xs bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 px-3 py-1.5 rounded-xl font-bold transition-colors">
+              🔊 Ring Bell
+            </button>
+            <button type="button" id="export-csv-btn" class="text-xs bg-emerald-500 hover:bg-emerald-400 text-slate-950 px-3.5 py-1.5 rounded-xl font-extrabold transition-colors shadow">
+              📥 Export Sales CSV
+            </button>
+          </div>
+        </div>
+        <div id="analytics-bars-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- STEP 5: DINE-IN TABLE RESERVATION & FLOOR PLAN -->
+    <!-- ========================================== -->
+    <section id="reserve-view-container" class="hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+        
+        <!-- Interactive Arabian Floor Map (6 Tables) -->
+        <div class="lg:col-span-2 bg-[#0d1832] border border-amber-500/30 rounded-2xl p-5 space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 class="text-lg font-extrabold text-amber-400">🪑 Yalla Habibi — Interactive Lounge &amp; Patio Floor Map</h3>
+              <p class="text-xs text-slate-400">Click any available table to select it for your dine-in reservation at Mumtaz Market, GT Road.</p>
+            </div>
+            <div class="flex items-center gap-3 text-[11px] font-semibold">
+              <span class="flex items-center gap-1 text-emerald-400">● Available</span>
+              <span class="flex items-center gap-1 text-amber-400">● Selected</span>
+              <span class="flex items-center gap-1 text-rose-400">● Reserved</span>
+            </div>
+          </div>
+
+          <div id="floor-plan-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5">
+            <!-- Populated by JS -->
+          </div>
+
+          <!-- Upcoming Reservations List -->
+          <div class="pt-4 border-t border-slate-800">
+            <h4 class="text-sm font-extrabold text-white mb-2.5">📅 Active Table Reservations</h4>
+            <div id="reservations-list-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Reservation Booking Form -->
+        <div class="bg-[#0d1832] border border-amber-500/40 rounded-2xl p-5 shadow-xl space-y-3 text-xs gold-glow">
+          <h3 class="text-base font-extrabold text-amber-400 border-b border-slate-800 pb-2">✨ Book Your Arabian Table</h3>
+          <div>
+            <label class="block text-slate-300 font-semibold mb-1">Selected Table</label>
+            <input type="text" id="res-table-input" readonly value="Table 1 (Main Hall — 4 Seats)" class="w-full bg-slate-950 text-amber-300 font-bold rounded-lg px-3 py-2 border border-amber-500/40 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-slate-300 font-semibold mb-1">Guest Name</label>
+            <input type="text" id="res-name-input" placeholder="e.g., Bilal Ahmed" class="w-full bg-slate-900 text-white placeholder-slate-400 rounded-lg px-3 py-2 border border-slate-700 focus:border-amber-400 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-slate-300 font-semibold mb-1">Phone Number</label>
+            <input type="tel" id="res-phone-input" placeholder="e.g., 0321-7654321" class="w-full bg-slate-900 text-white placeholder-slate-400 rounded-lg px-3 py-2 border border-slate-700 focus:border-amber-400 focus:outline-none">
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-slate-300 font-semibold mb-1">Time Slot</label>
+              <select id="res-time-select" class="w-full bg-slate-900 text-white rounded-lg px-2.5 py-2 border border-slate-700 focus:border-amber-400 focus:outline-none">
+                <option value="7:00 PM Tonight">7:00 PM Tonight</option>
+                <option value="8:30 PM Tonight" selected>8:30 PM Tonight</option>
+                <option value="10:00 PM Tonight">10:00 PM Tonight</option>
+                <option value="11:30 PM Late Night">11:30 PM Late Night</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-slate-300 font-semibold mb-1">Guests</label>
+              <select id="res-guests-select" class="w-full bg-slate-900 text-white rounded-lg px-2.5 py-2 border border-slate-700 focus:border-amber-400 focus:outline-none">
+                <option value="2 Guests">2 Guests</option>
+                <option value="4 Guests" selected>4 Guests</option>
+                <option value="6 Guests">6 Guests</option>
+                <option value="8+ Family Group">8+ Family Group</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="block text-slate-300 font-semibold mb-1">Occasion / Special Setup</label>
+            <select id="res-occasion-select" class="w-full bg-slate-900 text-white rounded-lg px-3 py-2 border border-slate-700 focus:border-amber-400 focus:outline-none">
+              <option value="Casual Arabian Dinner">✨ Casual Arabian Dinner</option>
+              <option value="Family Feast">👨‍👩‍👧‍👦 Family Feast</option>
+              <option value="Birthday Celebration 🎂">🎂 Birthday Celebration</option>
+              <option value="Friends Hangout">🥙 Friends Hangout</option>
+            </select>
+          </div>
+          <p id="res-feedback-msg" class="text-[11px] font-bold text-emerald-400 hidden"></p>
+          <button type="button" id="confirm-reservation-btn" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-2.5 px-4 rounded-xl text-xs sm:text-sm transition-colors shadow-md">
+            ✓ Confirm Table Reservation
+          </button>
+          <a id="res-whatsapp-link" href="https://wa.me/923258871788" target="_blank" rel="noopener noreferrer" class="hidden w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold py-2 px-4 rounded-xl text-xs transition-colors shadow flex items-center justify-center">
+            📲 Send Booking to WhatsApp
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- 5. ORDER CONFIRMATION MODAL                -->
+  <!-- ========================================== -->
+  <div id="order-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-[#0e1b38] border border-amber-500/50 rounded-2xl max-w-md w-full p-6 shadow-2xl text-white">
+      <div class="w-12 h-12 bg-amber-400 text-slate-950 rounded-full flex items-center justify-center mx-auto text-2xl mb-3 font-extrabold shadow-md">
+        ✓
+      </div>
+      <h3 class="text-xl font-extrabold text-center text-amber-400 mb-1">Yalla! Order Confirmed</h3>
+      <p class="text-xs text-center text-slate-300 mb-4">Order Ticket #<span id="modal-order-number">101</span> sent to Yalla Habibi Kitchen</p>
+      
+      <div class="bg-slate-900/90 rounded-xl p-4 mb-4 text-xs space-y-2 border border-slate-800">
+        <div class="flex justify-between text-slate-300">
+          <span>Order Type:</span>
+          <span id="modal-order-mode" class="font-bold text-amber-300">Fast Delivery</span>
+        </div>
+        <div class="flex justify-between text-slate-300">
+          <span>Customer / Table:</span>
+          <span id="modal-customer-info" class="font-semibold text-white">Guest</span>
+        </div>
+        <div class="flex justify-between text-slate-300">
+          <span>Items Ordered:</span>
+          <span id="modal-item-count" class="font-semibold text-white">0 items</span>
+        </div>
+        <div id="modal-free-drink-row" class="flex justify-between text-emerald-400 hidden">
+          <span>🎁 Free Meal Drink:</span>
+          <span id="modal-free-drink" class="font-bold">Cola Next</span>
+        </div>
+        <div id="modal-notes-row" class="flex justify-between text-amber-200/90 hidden">
+          <span>Kitchen Notes:</span>
+          <span id="modal-notes-text" class="font-medium italic">None</span>
+        </div>
+        <div class="flex justify-between text-sm font-extrabold text-white border-t border-slate-800 pt-2 mt-2">
+          <span>Total Payable:</span>
+          <span id="modal-total-amount" class="text-amber-400">Rs. 0</span>
+        </div>
+      </div>
+
+      <p class="text-[11px] text-center text-slate-400 mb-3">
+        📍 Mumtaz Market, GT Road, Gujranwala • 📞 03258871788
+      </p>
+
+      <!-- Step 3: WhatsApp Direct Order & Copy Receipt Actions -->
+      <div class="space-y-2 mb-3">
+        <a id="whatsapp-order-link" href="https://wa.me/923258871788" target="_blank" rel="noopener noreferrer" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold py-2.5 px-4 rounded-xl text-xs sm:text-sm transition-colors shadow-md flex items-center justify-center space-x-2">
+          <span>📲 Send Order via WhatsApp (03258871788)</span>
+        </a>
+        <div class="grid grid-cols-3 gap-1.5">
+          <button type="button" id="copy-receipt-btn" class="bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 font-bold py-2 px-2 rounded-xl text-[11px] transition-colors">
+            📋 Copy Receipt
+          </button>
+          <button type="button" id="open-thermal-btn" class="bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 font-bold py-2 px-2 rounded-xl text-[11px] transition-colors">
+            🖨️ POS Slip
+          </button>
+          <button type="button" id="modal-kitchen-jump-btn" class="bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 font-bold py-2 px-2 rounded-xl text-[11px] transition-colors">
+            👨‍🍳 View in Kitchen
+          </button>
+        </div>
+      </div>
+
+      <p id="copy-toast-msg" class="text-[11px] text-center text-emerald-400 font-bold mb-2 hidden">✓ Receipt copied to clipboard!</p>
+
+      <button type="button" id="modal-close-btn" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-2.5 px-4 rounded-xl text-sm transition-colors shadow-md">
+        Start Next Order
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 6. ORIGINAL MENU BOARD POSTER MODAL        -->
+  <!-- ========================================== -->
+  <div id="poster-modal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-[#0d1832] border border-amber-500/50 rounded-2xl max-w-4xl w-full p-4 shadow-2xl">
+      <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-800">
+        <div>
+          <h3 class="font-extrabold text-amber-400 text-base">Yalla Habibi — Official Menu Board</h3>
+          <p class="text-xs text-slate-400">Lebanese Flavors • Arabian Soul • Gujranwala's Pride</p>
+        </div>
+        <button type="button" id="close-poster-btn" class="bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg">✕ Close</button>
+      </div>
+      <div class="overflow-auto max-h-[75vh] rounded-xl border border-amber-500/30">
+        <img src="user_uploaded_files/ttl=63d/tool_generated/yalla_menu_board.jpg" alt="Yalla Habibi Menu Poster" class="w-full h-auto block">
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- STEP 4: DISH CUSTOMIZATION & ADD-ONS MODAL -->
+  <!-- ========================================== -->
+  <div id="customize-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-[#0e1b38] border border-amber-500/50 rounded-2xl max-w-md w-full p-5 shadow-2xl text-white">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div>
+          <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300">Make It Your Way</span>
+          <h3 id="cust-dish-name" class="text-lg font-extrabold text-white mt-1">Kudu Shawarma</h3>
+        </div>
+        <button type="button" id="close-customize-btn" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold px-2.5 py-1.5 rounded-lg">✕</button>
+      </div>
+
+      <div class="py-4 space-y-4 text-xs">
+        <!-- Spice Level -->
+        <div>
+          <label class="block font-bold text-amber-300 uppercase tracking-wider mb-2">1. Choose Spice Level</label>
+          <div class="grid grid-cols-3 gap-2" id="cust-spice-options">
+            <label class="flex items-center justify-center gap-1 bg-slate-900 border border-slate-700 rounded-xl p-2 cursor-pointer hover:border-amber-400">
+              <input type="radio" name="cust-spice" value="Mild Lebanese" class="accent-amber-500">
+              <span>🌿 Mild</span>
+            </label>
+            <label class="flex items-center justify-center gap-1 bg-slate-900 border border-amber-400/60 rounded-xl p-2 cursor-pointer">
+              <input type="radio" name="cust-spice" value="Medium Arabian" checked class="accent-amber-500">
+              <span>✨ Medium</span>
+            </label>
+            <label class="flex items-center justify-center gap-1 bg-slate-900 border border-slate-700 rounded-xl p-2 cursor-pointer hover:border-amber-400">
+              <input type="radio" name="cust-spice" value="Spicy Habibi 🔥" class="accent-amber-500">
+              <span>🌶️ Spicy</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Add-On Extras -->
+        <div>
+          <label class="block font-bold text-amber-300 uppercase tracking-wider mb-2">2. Add Lebanese Extras (Optional)</label>
+          <div class="space-y-2" id="cust-addons-list">
+            <label class="flex items-center justify-between bg-slate-900/90 border border-slate-800 rounded-xl px-3 py-2 cursor-pointer hover:border-amber-400/50">
+              <span class="font-medium">🧄 Extra Garlic Toum Dip</span>
+              <div class="flex items-center gap-2">
+                <span class="text-amber-400 font-bold">+Rs. 80</span>
+                <input type="checkbox" data-addon-name="Extra Garlic Toum" data-addon-price="80" class="cust-addon-cb accent-amber-500 w-4 h-4 rounded">
+              </div>
+            </label>
+            <label class="flex items-center justify-between bg-slate-900/90 border border-slate-800 rounded-xl px-3 py-2 cursor-pointer hover:border-amber-400/50">
+              <span class="font-medium">🧀 Extra Melted Cheese Slice</span>
+              <div class="flex items-center gap-2">
+                <span class="text-amber-400 font-bold">+Rs. 120</span>
+                <input type="checkbox" data-addon-name="Extra Cheese" data-addon-price="120" class="cust-addon-cb accent-amber-500 w-4 h-4 rounded">
+              </div>
+            </label>
+            <label class="flex items-center justify-between bg-slate-900/90 border border-slate-800 rounded-xl px-3 py-2 cursor-pointer hover:border-amber-400/50">
+              <span class="font-medium">🌶️ Spicy Arabian Harissa Drizzle</span>
+              <div class="flex items-center gap-2">
+                <span class="text-amber-400 font-bold">+Rs. 60</span>
+                <input type="checkbox" data-addon-name="Harissa Sauce" data-addon-price="60" class="cust-addon-cb accent-amber-500 w-4 h-4 rounded">
+              </div>
+            </label>
+            <label class="flex items-center justify-between bg-slate-900/90 border border-slate-800 rounded-xl px-3 py-2 cursor-pointer hover:border-amber-400/50">
+              <span class="font-medium">🥒 Extra Pickles &amp; Jalapeños</span>
+              <div class="flex items-center gap-2">
+                <span class="text-amber-400 font-bold">+Rs. 50</span>
+                <input type="checkbox" data-addon-name="Extra Pickles & Jalapenos" data-addon-price="50" class="cust-addon-cb accent-amber-500 w-4 h-4 rounded">
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-3 border-t border-slate-800 flex items-center justify-between">
+        <div>
+          <span class="text-[11px] text-slate-400 block">Item Total</span>
+          <span id="cust-live-price" class="text-lg font-extrabold text-amber-400">Rs. 1,050</span>
+        </div>
+        <button type="button" id="confirm-customize-btn" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-5 py-2.5 rounded-xl text-xs sm:text-sm transition-colors shadow-md">
+          + Add Customized Dish
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- STEP 4: PRINTABLE 80MM THERMAL POS RECEIPT -->
+  <!-- ========================================== -->
+  <div id="thermal-receipt-modal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-[#0e1b38] border border-amber-500/50 rounded-2xl max-w-sm w-full p-4 shadow-2xl">
+      <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-800">
+        <h3 class="font-extrabold text-amber-400 text-sm">🖨️ 80mm Thermal POS Receipt</h3>
+        <button type="button" id="close-thermal-btn" class="bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold px-2.5 py-1 rounded-lg">✕ Close</button>
+      </div>
+
+      <!-- Printable White Paper Receipt -->
+      <div id="thermal-receipt-printable" class="bg-white text-slate-950 font-mono text-[11px] p-4 rounded-xl shadow-inner space-y-2 leading-tight">
+        <div class="text-center border-b border-dashed border-slate-400 pb-2">
+          <p class="font-extrabold text-sm tracking-tight">YALLA HABIBI</p>
+          <p class="text-[10px]">Lebanese Shawarma &amp; Sandwiches</p>
+          <p class="text-[10px]">Mumtaz Market, GT Road, Gujranwala</p>
+          <p class="text-[10px] font-bold">Tel: 0325-8871788</p>
+        </div>
+        <div id="thermal-receipt-body" class="space-y-1 py-1">
+          <!-- Populated dynamically -->
+        </div>
+        <div class="text-center border-t border-dashed border-slate-400 pt-2 text-[10px]">
+          <p class="font-bold">SHUKRAN HABIBI! VISIT AGAIN ✨</p>
+          <p>@yallahabibi.pakistan</p>
+        </div>
+      </div>
+
+      <div class="mt-3 flex gap-2">
+        <button type="button" id="print-thermal-btn" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-2 px-3 rounded-xl text-xs transition-colors shadow">
+          🖨️ Print Thermal Slip
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-[#050a16] border-t border-amber-500/20 py-6 mt-12 text-center text-xs text-slate-400 space-y-1">
+    <p class="text-amber-400 font-bold">YALLA HABIBI • LEBANESE FLAVORS • ARABIAN SOUL • GUJRANWALA'S PRIDE</p>
+    <p>📍 Mumtaz Market, GT Road, Gujranwala | 📞 Fast Delivery: 03258871788 | Follow Us: @yallahabibi.pakistan</p>
+  </footer>
+
+  <!-- ========================================== -->
+  <!-- 7. JAVASCRIPT LOGIC                        -->
+  <!-- ========================================== -->
+  <script src="app.js"></script>
+
+<script>
+document.addEventListener('error', function(e) {
+  if (e.target && e.target.tagName === 'IMG') {
+    e.target.style.display = 'none';
+  }
+}, true);
+</script>
+</body>
+</html>
