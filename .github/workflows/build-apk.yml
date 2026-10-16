@@ -1,10 +1,13 @@
-name: Build Yalla Habibi APK
+name: Build Yalla Habibi Premium APK
 
 on:
   workflow_dispatch:
   push:
     branches:
       - main
+
+permissions:
+  contents: read
 
 jobs:
   build:
@@ -15,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Java
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
@@ -31,21 +34,29 @@ jobs:
             "platforms;android-35" \
             "build-tools;35.0.0"
 
-      - name: Extract Android project
+      - name: Extract premium Android project
         run: |
+          set -e
           mkdir -p extracted_project
-          unzip -q Yalla_Habibi_Android_Project.zip -d extracted_project
-          echo "Project files:"
-          ls -la extracted_project/yalla_habibi_android
+          unzip -q Yalla_Habibi_Premium_Featured_Project.zip -d extracted_project
+
+          echo "Checking project structure..."
+          find extracted_project -maxdepth 5 \
+            \( -name build.gradle -o -name build.gradle.kts \
+            -o -name settings.gradle -o -name settings.gradle.kts \) \
+            -type f
 
       - name: Build APK
         working-directory: extracted_project/yalla_habibi_android
         run: |
+          set -e
+          gradle --version
           gradle assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: yalla-habibi-apk
+          name: yalla-habibi-premium-apk
           path: extracted_project/yalla_habibi_android/app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
+          retention-days: 14
